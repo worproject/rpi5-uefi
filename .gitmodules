@@ -1,0 +1,16 @@
+[submodule "arm-trusted-firmware"]
+	path = arm-trusted-firmware
+	url = https://github.com/worproject/arm-trusted-firmware.git
+	branch = rpi5
+[submodule "edk2"]
+	path = edk2
+	url = https://github.com/worproject/edk2.git
+	branch = sdmmc-dev
+[submodule "edk2-platforms"]
+	path = edk2-platforms
+	url = https://github.com/worproject/edk2-platforms.git
+	branch = rpi5-dev
+[submodule "edk2-non-osi"]
+	path = edk2-non-osi
+	url = https://github.com/tianocore/edk2-non-osi.git
+	branch = master

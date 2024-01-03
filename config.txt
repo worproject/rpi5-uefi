@@ -1,0 +1,18 @@
+armstub=RPI_EFI.fd
+device_tree_address=0x1f0000
+device_tree_end=0x210000
+
+# Leave RP1 PCIe configured on hand-off.
+pciex4_reset=0
+
+# Force 32 bpp framebuffer allocation.
+framebuffer_depth=32
+
+# Disable compensation for displays with overscan.
+disable_overscan=1
+
+# Force maximum USB power regardless of the power supply.
+usb_max_current_enable=1
+
+# Force maximum CPU speed.
+force_turbo=1
