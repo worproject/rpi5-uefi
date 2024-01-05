@@ -50,6 +50,8 @@ Configuration through the user interface is fairly straightforward and help/navi
 
 * If you're getting a Synchronous Exception when booting certain distros, go to `Device Manager`->`EFI Memory Attribute Protocol` and untick `Enable Protocol`.
 
+* If you're running the RPi downstream kernel, enabling Device Tree instead of ACPI will provide better hardware support. To do so, go to `Device Manager`->`Raspberry Pi Configuration`->`ACPI / Device Tree` and change `System Table Mode`.
+
 # Status
 ## Supported peripherals
 Only devices relevant to the firmware are listed below.
@@ -66,7 +68,7 @@ Only devices relevant to the firmware are listed below.
 | UART                               | 🟢 Working     | PL011 available on the dedicated connector at 115200 8n1. |
 | GPIO                               | 🟢 Working     | GIO/AON, pin function. |
 | RTC                                | 🟢 Working     | Get/set time, wake up alarm. |
-| RNG                                | 🔴 Not working | |
+| RNG                                | 🟢 Working     | |
 | EEPROM                             | 🔴 Not working | Needed for proper NVRAM. |
 
 ## Supported OSes
@@ -75,11 +77,14 @@ ACPI support is currently under development and limited to a few devices that ha
 
 | OS | Version | Tested/supported hardware | Notes |
 | --- | --- | --- | --- |
-| Windows | 11 (including insider) | Display, USB, SD, SDIO | * USB may corrupt data, especially when used for booting.<br> * SD is limited to DDR50. |
-| Linux | tested Ubuntu 22.04, kernel 5.15.0-75-generic | Display, USB, SD, SDIO (incl. Wi-Fi) | * SD is limited to HS by default. See [Configuration settings - Linux](#Linux).<br> * Wi-Fi may require manual firmware installation. |
-| FreeBSD | 13.2 | Display, USB, SD | * SD is limited to HS. |
-| NetBSD | recent daily build | Display, USB | * SD fails to communicate with the card. |
-| VMware ESXi Arm Fling | 1.15 | Display, USB | * Requires compatible USB network adapter. |
+| Windows | 11 (including insider) | Display, USB, SD, SDIO | * USB may corrupt data, especially when used for booting.<br> * SD is limited to DDR50.<br> * PL011 UART driver fails to start, but debugging over it still works via DBG2. |
+| Linux | tested Ubuntu 22.04, kernel 5.15.0-75-generic | Display, UART, USB, SD, SDIO (incl. Wi-Fi) | * SD is limited to HS by default. See [Configuration settings - Linux](#Linux).<br> * Wi-Fi may require manual firmware installation. |
+| FreeBSD | 13.2 | Display, UART, USB, SD | * SD is limited to HS. |
+| NetBSD | recent daily build | Display, UART, USB | * SD fails to communicate with the card. |
+| VMware ESXi Arm Fling | 1.15 | Display, UART, USB | * Requires compatible USB network adapter. |
+
+### In Device Tree mode
+The included DTB is meant for the RPi downstream 6.1.y kernel.
 
 ## Building
 This process assumes a Linux machine. On Windows, use WSL.
