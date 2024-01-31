@@ -75,9 +75,12 @@ Only devices relevant to the firmware are listed below.
 ### In ACPI mode
 ACPI support is currently under development and limited to a few devices that have existing driver bindings.
 
+> [!WARNING]
+> USB is unreliable and may cause data corruption on all supported OSes. We're currently investigating this issue, see: https://github.com/worproject/rpi5-uefi/issues/3.
+
 | OS | Version | Tested/supported hardware | Notes |
 | --- | --- | --- | --- |
-| Windows | 11 (including insider) | Display, USB, SD, SDIO | * USB may corrupt data, especially when used for booting.<br> * SD is limited to DDR50.<br> * PL011 UART driver fails to start, but debugging over it still works via DBG2. |
+| Windows | 11 (including insider) | Display, USB, SD, SDIO | * SD is limited to DDR50.<br> * PL011 UART driver fails to start, but debugging over it still works via DBG2. |
 | Linux | tested Ubuntu 22.04, kernel 5.15.0-75-generic | Display, UART, USB, SD, SDIO (incl. Wi-Fi) | * SD is limited to HS by default. See [Configuration settings - Linux](#Linux).<br> * Wi-Fi may require manual firmware installation. |
 | FreeBSD | 13.2 | Display, UART, USB, SD | * SD is limited to HS. |
 | NetBSD | recent daily build | Display, UART, USB | * SD fails to communicate with the card. |
