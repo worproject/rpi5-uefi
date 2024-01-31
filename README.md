@@ -4,13 +4,15 @@ This repository contains a TF-A + EDK2 UEFI firmware port for Raspberry Pi 5.
 ![EDK2 Setup Screen](images/edk2_setup_screen.png)
 
 # Getting started
-Check the [Supported peripherals](#supported-peripherals) and [Supported OSes](#supported-oses) sections to see what's currently possible with this firmware.
+Check the [Supported OSes](#supported-oses) and [Supported peripherals in UEFI](#supported-peripherals-in-uefi) sections to see what's currently possible with this firmware.
 
 ## 1. Prerequisites
-* #### SD card or USB drive to store the firmware and/or operating system on
+* #### SD card to store the firmware and/or operating system on
 
   **Note:** For OS, it is highly suggested to use a quality drive with **good random I/O performance**. In SD terms this means an A1/A2-rated card.
-
+  
+  USB boot in [ACPI mode](#in-acpi-mode) is **NOT** recommended due to stability issues.
+  
 * #### Quality power supply and cable that can provide at least 5V 3A (15 W)
   Depending on the peripherals you use, more power may be needed. The recommended official power supply provides 5.1V 5A (25 W).
 
@@ -53,23 +55,6 @@ Configuration through the user interface is fairly straightforward and help/navi
 * If you're running the RPi downstream kernel, enabling Device Tree instead of ACPI will provide better hardware support. To do so, go to `Device Manager`->`Raspberry Pi Configuration`->`ACPI / Device Tree` and change `System Table Mode`.
 
 # Status
-## Supported peripherals
-Only devices relevant to the firmware are listed below.
-
-| Device | Status | Notes |
-| --- | --- | --- |
-| RP1 USB                            | 🟢 Working     | |
-| RP1 Ethernet                       | 🔴 Not working | |
-| RP1 GPIO                           | 🔴 Not working | |
-| RP1 PWM                            | 🔴 Not working | Fan control |
-| PCIe                               | 🔴 Not working | RP1 is left configured by the VPU. |
-| SD                                 | 🟢 Working     | SD cards up to SDR104. eMMC support is unknown. |
-| Display                            | 🟢 Working     | HDMI, driven by the VPU firmware. |
-| UART                               | 🟢 Working     | PL011 available on the dedicated connector at 115200 8n1. |
-| GPIO                               | 🟢 Working     | GIO/AON, pin function. |
-| RTC                                | 🟢 Working     | Get/set time, wake up alarm. |
-| RNG                                | 🟢 Working     | |
-| EEPROM                             | 🔴 Not working | Needed for proper NVRAM. |
 
 ## Supported OSes
 ### In ACPI mode
@@ -88,6 +73,25 @@ ACPI support is currently under development and limited to a few devices that ha
 
 ### In Device Tree mode
 The included DTB is meant for the RPi downstream 6.1.y kernel.
+
+## Supported peripherals in UEFI
+> [!NOTE]
+> Only devices relevant to the firmware itself (not OS) are listed below.
+
+| Device | Status | Notes |
+| --- | --- | --- |
+| RP1 USB                            | 🟢 Working     | |
+| RP1 Ethernet                       | 🔴 Not working | |
+| RP1 GPIO                           | 🔴 Not working | |
+| RP1 PWM                            | 🔴 Not working | Fan control |
+| PCIe                               | 🔴 Not working | RP1 is left configured by the VPU. |
+| SD                                 | 🟢 Working     | SD cards up to SDR104. eMMC support is unknown. |
+| Display                            | 🟢 Working     | HDMI, driven by the VPU firmware. |
+| UART                               | 🟢 Working     | PL011 available on the dedicated connector at 115200 8n1. |
+| GPIO                               | 🟢 Working     | GIO/AON, pin function. |
+| RTC                                | 🟢 Working     | Get/set time, wake up alarm. |
+| RNG                                | 🟢 Working     | |
+| EEPROM                             | 🔴 Not working | Needed for proper NVRAM. |
 
 ## Building
 This process assumes a Linux machine. On Windows, use WSL.
