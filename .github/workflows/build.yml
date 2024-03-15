@@ -27,7 +27,7 @@ jobs:
         CONFIGURATION: [Debug, Release]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           submodules: recursive
 
@@ -100,7 +100,7 @@ jobs:
               *.dtb
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: RPi${{ matrix.MODEL }}_UEFI_${{ matrix.CONFIGURATION }}_${{ steps.get_version_tag.outputs.version }}
           path: ./*.zip
