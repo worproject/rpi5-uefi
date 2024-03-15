@@ -7,11 +7,9 @@ This repository contains a TF-A + EDK2 UEFI firmware port for Raspberry Pi 5.
 Check the [Supported OSes](#supported-oses) and [Supported peripherals in UEFI](#supported-peripherals-in-uefi) sections to see what's currently possible with this firmware.
 
 ## 1. Prerequisites
-* #### SD card to store the firmware and/or operating system on
+* #### SD card, USB or NVME drive to store the firmware and/or operating system on
 
   **Note:** For OS, it is highly suggested to use a quality drive with **good random I/O performance**. In SD terms this means an A1/A2-rated card.
-  
-  USB boot in [ACPI mode](#in-acpi-mode) is **NOT** recommended due to stability issues.
   
 * #### Quality power supply and cable that can provide at least 5V 3A (15 W)
   Depending on the peripherals you use, more power may be needed. The recommended official power supply provides 5.1V 5A (25 W).
@@ -46,11 +44,13 @@ The UEFI provides options that can be viewed and changed using the UI configurat
 Configuration through the user interface is fairly straightforward and help/navigation information is provided around the menus.
 
 ## Linux
+* If you're getting a Synchronous Exception when booting certain distros, go to `Device Manager`->`EFI Memory Attribute Protocol` and untick `Enable Protocol`.
+
 * For maximum SD card performance, go to `Device Manager`->`Raspberry Pi Configuration`->`ACPI / Device Tree` and set `Compatibility Mode` to `Full Bay Trail`, then untick `Limit UHS-I Modes`.
 
   **Warning:** this may affect other OSes!
 
-* If you're getting a Synchronous Exception when booting certain distros, go to `Device Manager`->`EFI Memory Attribute Protocol` and untick `Enable Protocol`.
+* To enable PCIe support, go to `Device Manager`->`Raspberry Pi Configuration`->`ACPI / Device Tree` and change `ECAM Compatibility Mode` to `AMAZON GRAVITON`.
 
 * If you're running the RPi downstream kernel, enabling Device Tree instead of ACPI will provide better hardware support. To do so, go to `Device Manager`->`Raspberry Pi Configuration`->`ACPI / Device Tree` and change `System Table Mode`.
 
@@ -60,16 +60,13 @@ Configuration through the user interface is fairly straightforward and help/navi
 ### In ACPI mode
 ACPI support is currently under development and limited to a few devices that have existing driver bindings.
 
-> [!WARNING]
-> USB is unreliable and may cause data corruption on all supported OSes. We're currently investigating this issue, see: https://github.com/worproject/rpi5-uefi/issues/3.
-
 | OS | Version | Tested/supported hardware | Notes |
 | --- | --- | --- | --- |
-| Windows | 11 (including insider) | Display, USB, SD, SDIO | * SD is limited to DDR50.<br> * PL011 UART driver fails to start, but debugging over it still works via DBG2. |
-| Linux | tested Ubuntu 22.04, kernel 5.15.0-75-generic | Display, UART, USB, SD, SDIO (incl. Wi-Fi) | * SD is limited to HS by default. See [Configuration settings - Linux](#Linux).<br> * Wi-Fi may require manual firmware installation. |
-| FreeBSD | 13.2 | Display, UART, USB, SD | * SD is limited to HS. |
-| NetBSD | recent daily build | Display, UART, USB | * SD fails to communicate with the card. |
-| VMware ESXi Arm Fling | 1.15 | Display, UART, USB | * Requires compatible USB network adapter. |
+| Windows | 11 (including insider) | Display, USB, SD, SDIO, PCIe | * SD is limited to DDR50.<br> * PL011 UART driver fails to start, but debugging over it still works via DBG2.<br> * PCIe is limited to single-function devices. |
+| Linux | tested Ubuntu 22.04, kernel 5.15.0-75-generic | Display, UART, USB, SD, SDIO (incl. Wi-Fi), PCIe | * SD is limited to HS by default.<br> * Wi-Fi may require manual firmware installation.<br> * PCIe is limited to single-function devices; needs to be enabled manually.<br> See [Configuration settings - Linux](#Linux). |
+| FreeBSD | 13.2 | Display, UART, USB, SD, PCIe | * SD is limited to HS. |
+| NetBSD | recent daily build | Display, UART, USB, PCIe | * SD fails to communicate with the card. |
+| VMware ESXi Arm Fling | 1.15 | Display, UART, USB, PCIe | * Requires compatible USB network adapter. |
 
 ### In Device Tree mode
 The included DTB is meant for the RPi downstream 6.1.y kernel.
@@ -84,7 +81,7 @@ The included DTB is meant for the RPi downstream 6.1.y kernel.
 | RP1 Ethernet                       | 🔴 Not working | |
 | RP1 GPIO                           | 🔴 Not working | |
 | RP1 PWM                            | 🔴 Not working | Fan control |
-| PCIe                               | 🔴 Not working | RP1 is left configured by the VPU. |
+| PCIe                               | 🟢 Working     | |
 | SD                                 | 🟢 Working     | SD cards up to SDR104. eMMC support is unknown. |
 | Display                            | 🟢 Working     | HDMI, driven by the VPU firmware. |
 | UART                               | 🟢 Working     | PL011 available on the dedicated connector at 115200 8n1. |
