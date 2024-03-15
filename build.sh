@@ -71,6 +71,7 @@ make \
     PRELOADED_BL33_BASE=0x20000 \
     RPI3_PRELOADED_DTB_BASE=0x1F0000 \
     SUPPORT_VFP=1 \
+    SMC_PCI_SUPPORT=1 \
     DEBUG=${DEBUG} \
     all \
     ${TFA_FLAGS} \
