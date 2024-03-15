@@ -2,9 +2,6 @@ armstub=RPI_EFI.fd
 device_tree_address=0x1f0000
 device_tree_end=0x210000
 
-# Leave RP1 PCIe configured on hand-off.
-pciex4_reset=0
-
 # Force 32 bpp framebuffer allocation.
 framebuffer_depth=32
 
