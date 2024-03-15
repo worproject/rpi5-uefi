@@ -43,6 +43,12 @@ The UEFI provides options that can be viewed and changed using the UI configurat
 
 Configuration through the user interface is fairly straightforward and help/navigation information is provided around the menus.
 
+## PCI Express
+The PCIe connector is limited to Gen 2 speed by default. For other modes, go to `Device Manager`->`Raspberry Pi Configuration`->`PCI Express` and change `Link Speed`.
+
+> [!NOTE]
+> Raspberry Pi 5 is not officially rated for PCIe Gen 3. Some devices and adapters may run into reliability issues at this speed, either due to signal integrity or insufficient power.
+
 ## Linux
 * If you're getting a Synchronous Exception when booting certain distros, go to `Device Manager`->`EFI Memory Attribute Protocol` and untick `Enable Protocol`.
 
