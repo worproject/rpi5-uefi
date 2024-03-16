@@ -91,17 +91,12 @@ jobs:
         run: |
           curl -O -L ${{ env.RPI_FIRMWARE_URL }}/raw/${{ env.DTB_VERSION }}/boot/bcm2712-rpi-5-b.dtb
 
-      - name: Create firmware archive
-        run: |
-          zip -r \
-              RPi${{ matrix.MODEL }}_UEFI_${{ matrix.CONFIGURATION }}_${{ steps.get_version_tag.outputs.version }}.zip \
-              RPI_EFI.fd \
-              config.txt \
-              *.dtb
-
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: RPi${{ matrix.MODEL }}_UEFI_${{ matrix.CONFIGURATION }}_${{ steps.get_version_tag.outputs.version }}
-          path: ./*.zip
+          path: |
+            RPI_EFI.fd
+            config.txt
+            *.dtb
           if-no-files-found: error
