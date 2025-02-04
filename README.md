@@ -1,3 +1,12 @@
+# End of support notice
+This repository is no longer maintained and has been archived.
+
+The firmware provided here has only been tested on early Raspberry Pi 5B models with the BCM2712C1 SoC. Recent D0 models may require a newer EEPROM firmware, which has been reported to break the graphical output in UEFI and other projects. Given that it used to work before, we view this as a limitation of the latest EEPROM firmware rather than a UEFI issue.
+
+If you are still interested in running UEFI on these boards, please contact Raspberry Pi for further support.
+
+You may also want to consider using better supported hardware instead: https://github.com/edk2-porting/edk2-rk3588
+
 # Raspberry Pi 5 UEFI
 This repository contains a TF-A + EDK2 UEFI firmware port for Raspberry Pi 5.
 
